@@ -19,4 +19,6 @@ print(routes.calc_distance_btwn_routes(graph, ['A', 'E', 'D']))  # A5
 
 
 
-print(routes.calc_stops_btwn_routes(graph, 'C', 'C', 3))
+#print(routes.calc_stops_btwn_routes(graph, 'C', 'C', 3))
+
+print(routes.get_diff_routes_from_origin(graph, 'C', [], []))
