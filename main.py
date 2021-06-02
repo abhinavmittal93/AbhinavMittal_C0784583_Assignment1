@@ -16,3 +16,7 @@ print(routes.calc_distance_btwn_routes(graph, ['A', 'D', 'C']))  # A3
 print(routes.calc_distance_btwn_routes(graph, ['A', 'E', 'B', 'C', 'D']))  # A4
 print(routes.calc_distance_btwn_routes(graph, ['A', 'E', 'D']))  # A5
 # ----------------------- GROUP A ends --------------------------------------------
+
+
+
+print(routes.calc_stops_btwn_routes(graph, 'C', 'C', 3))
