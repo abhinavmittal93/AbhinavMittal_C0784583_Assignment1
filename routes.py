@@ -12,32 +12,24 @@ def calc_distance_btwn_routes(graph, route):
     return f'The distance between route: {route} is {distance}'
 
 
-def calc_stops_btwn_routes(graph, origin, destination, max_stops, routes_visited=[]):
+def calc_stops_btwn_routes(graph, origin, destination, max_stops):
+    response = 0
     if origin in graph and destination in graph:
-        routes = 0
-        stops = 0
 
-        if stops == max_stops:
-            return 0
+        routes = get_diff_routes_from_origin(graph, origin, [], [], [])
 
-        for route in graph[origin]:
-            if not routes_visited[route]:
-                if route == destination:
-                    stops += 1
-                    routes += 1
-                    routes_visited.append(route)
+        for route in routes:
+            if len(route) - 1 <= max_stops:
+                response += 1
 
-                if route not in routes_visited and route != destination:
-                    routes_visited.append(route)
-                    routes += calc_stops_btwn_routes(graph, route, destination, max_stops - stops)
-
-        return routes
+        return response
 
     else:
         return 'NO SUCH ROUTE'
 
 
-def get_diff_routes_from_origin(graph, origin, routes=[], single_route=[], visited = []):
+def get_diff_routes_from_origin(graph, origin, routes=[], single_route=[], visited=[]):
+
     if origin in graph:
 
         if len(single_route) > 2 and single_route[-1] == single_route[0]:
@@ -45,15 +37,13 @@ def get_diff_routes_from_origin(graph, origin, routes=[], single_route=[], visit
             single_route = [temp]
 
         single_route.append(origin)
-        #visited.append(origin)
-        for route in graph[origin]:
-            #if len(visited) == 0 or route not in visited:
-                #visited.append(route)
-            if len(single_route) > 1 and single_route[0] == origin:
-                routes.append(single_route)
-                break
 
-            get_diff_routes_from_origin(graph, route, routes, single_route)
+        if len(single_route) > 1 and single_route[0] == origin and single_route not in routes:
+            routes.append(single_route)
 
+        if len(visited) == 0 or origin not in visited or (len(visited) > 0 and visited[0] == origin):
+            visited.append(origin)
+            for route in graph[origin]:
+                get_diff_routes_from_origin(graph, route, routes, single_route)
 
     return routes
